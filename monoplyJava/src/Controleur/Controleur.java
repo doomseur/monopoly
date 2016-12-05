@@ -13,6 +13,7 @@ import Modele.Gare;
 import Modele.Compagnie;
 import Modele.AutreCarreau;
 import Ui.IHM;
+import com.sun.beans.util.Cache;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -23,6 +24,8 @@ public class Controleur {
         private HashMap<Integer,Carreau> cases;
         private  int nbjoueurs =0;
         private ArrayList<Joueur> joueurs = new ArrayList<>();
+        
+        
         public Controleur(IHM ihm){
             this.setIhm(ihm);
             this.cases = new HashMap<Integer,Carreau>();
@@ -59,9 +62,12 @@ public class Controleur {
             }
         }
 	
-/*
-	private Carreau avancer(Joueur aJ, int aNb) {
-		throw new UnsupportedOperationException();
+        // avancer(joueur courant, valdés ) 
+	private void avancer(Joueur aJ, int aNb) {
+		aJ.getPositionCourante().getNumero() ; // récupère le numéro du carreau ou est le joueur 
+               int nouveauNum = calculNouvPosition(aJ.getPositionCourante().getNumero(), aNb) ;
+                aJ.setPositionCourantePublique(getCarreau(nouveauNum) ) ;
+              
 	}
         
         
@@ -71,20 +77,30 @@ public class Controleur {
 
 	
 
-	public Joueur getJoueurCourant() {
-		throw new UnsupportedOperationException();
-	}
+//	public Joueur getJoueurCourant() {
+//    		throw new UnsupportedOperationException();
+//	}
 
 	public Carreau getCarreau(int aNouvNum) {
-		throw new UnsupportedOperationException();
+        return getCases().get(aNouvNum) ;
 	}
-
+        
+        //calculNouvPosition(numero de la case , valeurdes dés )
 	public int calculNouvPosition(int aNum, int aValDés) {
-		throw new UnsupportedOperationException();
+	//joueur passe un tour complet	
+            if (aNum + aValDés >= 40) {
+//                getJoueurCourant().setCash(getJoueurCourant().getCash()+200 ) : // prend le joueur courant et lui ajoute 200$ car il est passé par la case départ 
+            int numerocase = aNum + aValDés - 40 ;
+            return numerocase ;
+            }
+            else {
+            return aNum+aValDés ; //retourne la somme du numéro de la case + la valeur des dés
+            }
+            
 	}
         
         
-    */    
+       
         
         private void buildGamePlateau(String dataFilename)
 	{
@@ -96,13 +112,13 @@ public class Controleur {
 			for(int i=0; i<data.size(); ++i){
 				String caseType = data.get(i)[0];
 				if(caseType.compareTo("P") == 0){
-                                        this.getCases().put(Integer.parseInt(data.get(i)[1]),new ProprieteAConstruire(Integer.parseInt(data.get(i)[1]),data.get(i)[2],Integer.parseInt(data.get(i)[3])));     
+                                        this.getCases().put(Integer.parseInt(data.get(i)[1]),new ProprieteAConstruire(Integer.parseInt(data.get(i)[1]),data.get(i)[2]));     
 				}
 				else if(caseType.compareTo("G") == 0){
-					this.getCases().put(Integer.parseInt(data.get(i)[1]),new Gare(Integer.parseInt(data.get(i)[1]),data.get(i)[2],Integer.parseInt(data.get(i)[3])));
+					this.getCases().put(Integer.parseInt(data.get(i)[1]),new Gare(Integer.parseInt(data.get(i)[1]),data.get(i)[2]));
 				}
 				else if(caseType.compareTo("C") == 0){
-					this.getCases().put(Integer.parseInt(data.get(i)[1]),new Compagnie(Integer.parseInt(data.get(i)[1]),data.get(i)[2],Integer.parseInt(data.get(i)[3])));
+					this.getCases().put(Integer.parseInt(data.get(i)[1]),new Compagnie(Integer.parseInt(data.get(i)[1]),data.get(i)[2]));
 				}
 				else if(caseType.compareTo("AU") == 0){
 					this.getCases().put(Integer.parseInt(data.get(i)[1]),new AutreCarreau(Integer.parseInt(data.get(i)[1]),data.get(i)[2]));

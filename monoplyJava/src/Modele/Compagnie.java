@@ -1,9 +1,9 @@
 package Modele;
 
-public class Compagnie extends Propriete{
+public class Compagnie extends Carreau{
     
-        public Compagnie(int num, String nom, int p){
-            super(num, nom, p);
+        public Compagnie(int num, String nom){
+            super(num, nom);
         
         }
 }

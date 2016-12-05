@@ -1,9 +1,9 @@
 package Modele;
 
-public class ProprieteAConstruire extends Propriete{
+public class ProprieteAConstruire extends Carreau{
     
-    public ProprieteAConstruire(int num, String nom, int p){
-        super(num, nom, p);
+    public ProprieteAConstruire(int num, String nom){
+        super(num, nom);
         
     }
 }

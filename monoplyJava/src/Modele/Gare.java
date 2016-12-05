@@ -1,14 +1,20 @@
 package Modele;
 
-public class Gare extends Propriete {
-	
+public class Gare extends Carreau {
+	private Joueur proprietaire;
         
-        public Gare(int num, String nom, int p){
-            super(num, nom, p);
+        public Gare(int num, String nom){
+            super(num, nom);
         
         }
 
-    
+    public Joueur getProprietaire() {
+        return proprietaire;
+    }
+
+    private void setProprietaire(Joueur proprietaire) {
+        this.proprietaire = proprietaire;
+    }
 
 	private int calculLoyer() {
 		throw new UnsupportedOperationException();

@@ -14,13 +14,13 @@ public class Joueur {
        
     }
 
-    public void payerLoyer(int aL) {
-	throw new UnsupportedOperationException();
-    }
+	public void payerLoyer(int aL) {
+		throw new UnsupportedOperationException();
+	}
 
-    public void recevoirLoyer(int aL) {
-	throw new UnsupportedOperationException();
-    }
+	public void recevoirLoyer(int aL) {
+		throw new UnsupportedOperationException();
+	}
 
     public String getNomJoueur() {
         return nomJoueur;
@@ -54,6 +54,9 @@ public class Joueur {
         this.positionCourante = positionCourante;
     }
 
+    public void setPositionCourantePublique(Carreau positionCourante){  //pour pouvoir recupéré le setteur qui est privé
+        setPositionCourante(positionCourante);
+    }
 	
 
 	
