@@ -14,13 +14,13 @@ public class Joueur {
        
     }
 
-	public void payerLoyer(int aL) {
-		throw new UnsupportedOperationException();
-	}
+    public void payerLoyer(int aL) {
+	throw new UnsupportedOperationException();
+    }
 
-	public void recevoirLoyer(int aL) {
-		throw new UnsupportedOperationException();
-	}
+    public void recevoirLoyer(int aL) {
+	throw new UnsupportedOperationException();
+    }
 
     public String getNomJoueur() {
         return nomJoueur;
