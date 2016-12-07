@@ -37,9 +37,9 @@ public abstract class Propriete extends Carreau{
 
     public abstract void acheterPropriete(Joueur joueur);
 
-    public void payerLoyer(Joueur payeur, Joueur payé){
-        payeur.perdreCash(this.getLoyer());
-        payé.recevoirCash(this.getLoyer());
+    public void payerLoyer(Joueur payeur, Joueur payé,int valdés){
+        payeur.perdreCash(this.calculLoyer(valdés));
+        payé.recevoirCash(this.calculLoyer(valdés));
     } 
 
     

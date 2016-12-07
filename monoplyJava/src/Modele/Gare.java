@@ -18,6 +18,7 @@ public class Gare extends Propriete {
 
     @Override
     public int calculLoyer(int valdés) {
+        this.setLoyer(25*this.getProprietaire().getNbGares());
         return 25*this.getProprietaire().getNbGares();
     }
 }

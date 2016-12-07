@@ -33,9 +33,11 @@ public class ProprieteAConstruire extends Propriete{
     @Override
     public int calculLoyer(int valdés) {
        if(this.getProprietaire().AToutLeGroupe(this.getGroup())){
+           
             return this.getLoyer() *2;
         }
         else{    
+           
         return this.getLoyer() ;
         }
     }
