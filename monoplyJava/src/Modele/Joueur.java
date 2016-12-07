@@ -1,5 +1,6 @@
 package Modele;
 
+import Util.Groupe;
 import java.util.ArrayList;
 
 public class Joueur {
@@ -7,19 +8,37 @@ public class Joueur {
 	private int cash = 1500;
 	private ArrayList<Gare> gares = new ArrayList<>();
 	private Carreau positionCourante;
+        private ArrayList<ProprieteAConstruire> proprietes = new ArrayList<>();
+         private ArrayList<Compagnie> compagnies = new ArrayList<>();
 
+    public ArrayList<ProprieteAConstruire> getProprietes() {
+        return proprietes;
+    }
+
+    private void setProprietes(ArrayList<ProprieteAConstruire> proprietes) {
+        this.proprietes = proprietes;
+    }
+
+    public ArrayList<Compagnie> getCompagnies() {
+        return compagnies;
+    }
+
+    private void setCompagnies(ArrayList<Compagnie> compagnies) {
+        this.compagnies = compagnies;
+    }
+         
     public Joueur(String nomJoueur, Carreau position) {
         this.setNomJoueur(nomJoueur);
         this.setPositionCourante(position);
        
     }
 
-	public void payerLoyer(int aL) {
-		throw new UnsupportedOperationException();
+	public void perdreCash(int loyer) {
+		this.setCash(this.getCash()-loyer);
 	}
 
-	public void recevoirLoyer(int aL) {
-		throw new UnsupportedOperationException();
+	public void recevoirCash(int loyer) {
+		this.setCash(this.getCash()+loyer);
 	}
 
     public String getNomJoueur() {
@@ -53,27 +72,32 @@ public class Joueur {
     private void setPositionCourante(Carreau positionCourante) {
         this.positionCourante = positionCourante;
     }
-
-    public void setPositionCourantePublique(Carreau positionCourante){  //pour pouvoir recupéré le setteur qui est privé
+  public void setPositionCourantePublique(Carreau positionCourante){  //pour pouvoir recupéré le setteur qui est privé
         setPositionCourante(positionCourante);
-    }
+}
+    public int getNbGares() {
+            return this.getGares().size();
+	}
+
 	
-
-	
-
-	public void devientProprietaire(Gare aGare) {
-		throw new UnsupportedOperationException();
+	public void addGare(Gare g) {
+		this.gares.add(g);
+	}
+        public void addPropriete (ProprieteAConstruire p) {
+		this.proprietes.add(p);
+	}
+        public void addCompagnie(Compagnie c) {
+		this.compagnies.add(c);
 	}
 
-	public int getNbGares() {
-		throw new UnsupportedOperationException();
-	}
 
-	public void subCash(int aPrix) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void addGare(Gare aGare) {
-		throw new UnsupportedOperationException();
-	}
+public boolean AToutLeGroupe(Groupe grp){
+ int var = grp.getNbproprietes();
+ if(this.getProprietes().containsAll(grp.getProprietes())){
+     return true;
+ }
+ else{
+     return false;
+ }
+}
 }

@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Modele/Carreau.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Data/data.txt</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Controleur/Controleur.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Modele/ProprieteAConstruire.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Util/Groupe.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Modele/Gare.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Modele/Joueur.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Modele/Propriete.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Modele/AutreCarreau.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Modele/Compagnie.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Controleur/Main.java</file>
+            <file>file:/users/info/etu-s2/bonnetfa/monoplyJava/src/Util/Utilitaire.java</file>
+        </group>
     </open-files>
 </project-private>

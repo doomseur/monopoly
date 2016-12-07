@@ -1,43 +1,23 @@
 package Modele;
 
-public class Gare extends Carreau {
-	private Joueur proprietaire;
-        
-        public Gare(int num, String nom){
-            super(num, nom);
+public class Gare extends Propriete {
+	
+
+        public Gare(int num, String nom, int p,int loyer){
+            super(num, nom, p,loyer);
         
         }
 
-    public Joueur getProprietaire() {
-        return proprietaire;
+
+        @Override
+	public void acheterPropriete(Joueur j) {
+		j.perdreCash(this.getPrix());
+                j.addGare(this);
+	}
+
+
+    @Override
+    public int calculLoyer(int valdés) {
+        return 25*this.getProprietaire().getNbGares();
     }
-
-    private void setProprietaire(Joueur proprietaire) {
-        this.proprietaire = proprietaire;
-    }
-
-	private int calculLoyer() {
-		throw new UnsupportedOperationException();
-	}
-
-
-	public void acheterPropriete(Joueur aJ) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void payerLoyer(Joueur aJAch, Joueur aJRec) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Donne le prix d'une gare
-	 */
-	public int getPrix() {
-		throw new UnsupportedOperationException();
-	}
-
-	public int getLoyer(int aNb) {
-		throw new UnsupportedOperationException();
-	}
 }
-	

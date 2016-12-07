@@ -1,3 +1,5 @@
+package Util;
+
 public enum CouleurPropriete {
 	bleuFonce, 
 	orange, 
