@@ -2,10 +2,9 @@ package Util;
 
 public class Utilitaire {
   
-    private int valdes1 ;
-    private int valdes2 ;
+
     
-public int lancerdés(){
+public static int lancerdés(){
            
            //retourne un chiffre entre 0(je voudrais pas pouvoir faire 0 perso) et 6
             valdes1 = (int) (Math.random() * 6 )+1;           
