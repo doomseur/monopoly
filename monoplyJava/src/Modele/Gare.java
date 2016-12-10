@@ -13,6 +13,7 @@ public class Gare extends Propriete {
 	public void acheterPropriete(Joueur j) {
 		j.perdreCash(this.getPrix());
                 j.addGare(this);
+                this.setProprietaire(j);
 	}
 
 

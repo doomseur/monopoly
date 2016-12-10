@@ -6,4 +6,9 @@ public class AutreCarreau extends Carreau{
             super(num, nom);
         
         }
+
+    @Override
+    public void Action(Joueur j,int valdé) {
+       System.out.println("Vous êtes sur une case qui ne sert à rien, fin de votre tour, yep !");
+    }
 }

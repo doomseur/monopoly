@@ -10,6 +10,7 @@ public class Joueur {
 	private Carreau positionCourante;
         private ArrayList<ProprieteAConstruire> proprietes = new ArrayList<>();
          private ArrayList<Compagnie> compagnies = new ArrayList<>();
+         private int valDésOrdre;
 
     public ArrayList<ProprieteAConstruire> getProprietes() {
         return proprietes;
@@ -27,10 +28,10 @@ public class Joueur {
         this.compagnies = compagnies;
     }
          
-    public Joueur(String nomJoueur, Carreau position) {
+    public Joueur(String nomJoueur, Carreau position, int valDés) {
         this.setNomJoueur(nomJoueur);
         this.setPositionCourante(position);
-       
+        this.setValDésOrdre(valDés);
     }
 
 	public void perdreCash(int loyer) {
@@ -72,8 +73,9 @@ public class Joueur {
     private void setPositionCourante(Carreau positionCourante) {
         this.positionCourante = positionCourante;
     }
-  public void setPositionCourantePublique(Carreau positionCourante){  //pour pouvoir recupéré le setteur qui est privé
-        setPositionCourante(positionCourante);
+  public void Avancer(Carreau positionCourante){  
+        this.setPositionCourante(positionCourante);
+        
 }
     public int getNbGares() {
             return this.getGares().size();
@@ -100,4 +102,14 @@ public boolean AToutLeGroupe(Groupe grp){
      return false;
  }
 }
+
+   
+    public int getValDésOrdre() {
+        return valDésOrdre;
+    }
+
+    
+    public void setValDésOrdre(int ValDésOrdre) {
+        this.valDésOrdre = ValDésOrdre;
+    }
 }

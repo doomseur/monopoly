@@ -18,69 +18,107 @@ import Util.CouleurPropriete;
 import Util.Groupe;
 import Util.Utilitaire;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Observer;
 import java.util.Scanner;
 
-public class Controleur {
+public class Controleur2 {
         private HashMap<CouleurPropriete,Groupe> groupes = new HashMap<>();
         private IHM ihm;
         private HashMap<Integer,Carreau> cases;
         private  int nbjoueurs =0;
         private ArrayList<Joueur> joueurs = new ArrayList<>();
+        private ArrayList<Integer> casesTruquées = new ArrayList<>();
         
-        public Controleur(IHM ihm){
+        public Controleur2(IHM ihm){
             this.setIhm(ihm);
             this.cases = new HashMap<Integer,Carreau>();
             this.buildGamePlateau("src/Data/data.txt");
             for(int i : this.cases.keySet()){
                 System.out.println("Num: "+ cases.get(i).getNumero() +" Nom: "+ cases.get(i).getNom());
             }
-            
-            boolean continuer = true;
-            while(nbjoueurs <6 && continuer){
-                System.out.println("Entrez le nom du joueur " + (nbjoueurs+1) +" :");
-                Scanner sc = new Scanner(System.in);
-                String name = sc.next();
-                joueurs.add(new Joueur(name,cases.get(1),(Utilitaire.lancerdés()+Utilitaire.lancerdés())));
-                nbjoueurs = nbjoueurs + 1;
-                if(nbjoueurs <6){
-                    System.out.println("Voulez vous inscrire un nouveau joueur ? (oui/non)");
-                    String var;
-                    Scanner sc1 = new Scanner(System.in);
-                    var = sc1.next().trim();
-                        while(!var.equalsIgnoreCase("oui") & !var.equalsIgnoreCase("non")){
-                            System.out.println("Saisie incorrecte, veuillez recommencer.");
-                               var = sc.next();
-                        }
-                        if (nbjoueurs <2 && "non".equals(var)){
-                            System.out.println("Pas assez de joueurs pour continuer.(2 minimum)");
-                        }
-                        else if (nbjoueurs >= 2 &&"non".equals(var)){
-                            continuer = false;
-                        }}}
-            System.out.println("Les joueurs inscrits sont : ");
-            for(int i =0; i< this.joueurs.size(); i++){
-                System.out.println(joueurs.get(i).getNomJoueur());
-            }
-            
-            ArrayList<Joueur> joueursTemp = new ArrayList<>();
-                
-            for(int i=12; i>=2; i--){
-                for(int j =0; j< this.joueurs.size(); j++){
-                    if(this.joueurs.get(j).getValDésOrdre()==i){
-                        joueursTemp.add(this.joueurs.get(j));
-                    }
-                }
-            }
-            this.joueurs = joueursTemp;
-            
-            System.out.println("Le nouvel ordre est : ");
-            for(int i =0; i< this.joueurs.size(); i++){
-                System.out.println("Joueur n°"+ i +" : "+ joueurs.get(i).getNomJoueur() +" avec un score au dés de "+ joueurs.get(i).getValDésOrdre());
-            }
-             
-            
-            jouerPlsTour(joueurs);
+         
+                joueurs.add(new Joueur("J1",cases.get(1),(Utilitaire.lancerdés()+Utilitaire.lancerdés())));
+                joueurs.add(new Joueur("J2",cases.get(1),(Utilitaire.lancerdés()+Utilitaire.lancerdés())));
+                casesTruquées.add(2);
+                casesTruquées.add(3);
+                casesTruquées.add(2);
+                casesTruquées.add(3);
+                casesTruquées.add(0);
+                casesTruquées.add(2);
+                casesTruquées.add(0);
+                casesTruquées.add(3);
+                casesTruquées.add(0);
+                casesTruquées.add(1);
+                casesTruquées.add(0);
+                casesTruquées.add(4);
+                casesTruquées.add(0);
+                casesTruquées.add(4);
+                casesTruquées.add(0);
+                casesTruquées.add(2);
+                casesTruquées.add(0);
+                casesTruquées.add(3);
+                casesTruquées.add(0);
+                casesTruquées.add(1);
+                casesTruquées.add(0);
+                casesTruquées.add(1);
+                casesTruquées.add(0);
+                casesTruquées.add(2);
+                casesTruquées.add(0);
+                casesTruquées.add(2);
+                casesTruquées.add(0);
+                casesTruquées.add(1);
+                casesTruquées.add(0);
+                casesTruquées.add(1);
+                casesTruquées.add(0);
+                casesTruquées.add(1);
+                casesTruquées.add(0);
+                casesTruquées.add(8);
+                casesTruquées.add(0);
+                casesTruquées.add(9);
+                casesTruquées.add(0);
+                casesTruquées.add(1);
+                casesTruquées.add(0);
+                casesTruquées.add(11);
+                casesTruquées.add(0);
+                casesTruquées.add(11);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(20);
+                casesTruquées.add(20);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                casesTruquées.add(0);
+                casesTruquées.add(40);
+                jouerplsTour(joueurs);
         }
 	
 //    avancer(joueur courant , valdes)
@@ -99,28 +137,25 @@ public class Controleur {
         
         
         //
-        public void jouerPlsTour(ArrayList<Joueur> joueurs){
+        public void jouerplsTour(ArrayList<Joueur> joueurs){
         boolean finpartie =  false ;
             while (!finpartie) {  // tant que not jouer   
                 for(int i =0; i< joueurs.size(); i++){ // boucle sur tout les joueurs
                     if(joueurs.size()>=2){     
                         System.out.println("C'est le tour de " + joueurs.get(i).getNomJoueur() +" il possède acutellement " + joueurs.get(i).getCash() +" euros !!!");
                         jouerTour(joueurs.get(i)); //le joueur courant joue son tour
-                        if (joueurs.get(i).getCash()<=0){
+                      if (joueurs.get(i).getCash()<=0){
                             for(int j =0;  j<joueurs.get(i).getGares().size(); j++){
-                                
+                                joueurs.get(i).getGares().remove(j);
                                  joueurs.get(i).getGares().get(j).resetProprio();
-                                 joueurs.get(i).getGares().remove(j);
                             }
                             for(int k =0;  k<joueurs.get(i).getCompagnies().size(); k++){
-                                
+                                joueurs.get(i).getCompagnies().remove(k);
                                  joueurs.get(i).getCompagnies().get(k).resetProprio();
-                                 joueurs.get(i).getCompagnies().remove(k);
                             }
                             for(int l =0;  l<joueurs.get(i).getProprietes().size(); l++){
-                                
-                                joueurs.get(i).getProprietes().get(l).resetProprio();
                                 joueurs.get(i).getProprietes().remove(l);
+                                 joueurs.get(i).getProprietes().get(l).resetProprio();
                             }
                             joueurs.remove(i); //enleve le joueur de la collection 
                         }    
@@ -131,6 +166,7 @@ public class Controleur {
                         finpartie= true ; 
                         System.out.println("Partie terminée, le vainqueur est : " +joueurs.get(0).getNomJoueur() + "!!!!!!!!!!!!!!!!");
                     }    // sort de la boucle while    
+                      
                 }
             }   
         }
@@ -139,9 +175,11 @@ public class Controleur {
         public void jouerTour(Joueur joueur){
             boolean rdouble = true;
             while (rdouble ==true){
-            int valdé = Utilitaire.lancerdés() ;
-            int valdé2 = Utilitaire.lancerdés() ;
-            if(valdé==valdé2){
+            int valdé = casesTruquées.get(0);
+            casesTruquées.remove(0);
+            int valdé2 = casesTruquées.get(0);
+            casesTruquées.remove(0);
+               if(valdé==valdé2){
                 rdouble =true;
                  System.out.println("Vous avez fait un double, vous aurez le droit de rejouer !");
             }
@@ -153,7 +191,9 @@ public class Controleur {
                Carreau carreauJoueur = joueur.getPositionCourante();
                carreauJoueur.Action(joueur,vardés) ; //l'action fera passé au tour suivant 
             }
+                           
 }
+        
 
 
         

@@ -1,6 +1,5 @@
 package Modele;
 
-import Util.CouleurPropriete;
 import Util.Groupe;
 
 public class ProprieteAConstruire extends Propriete{
@@ -26,6 +25,7 @@ public class ProprieteAConstruire extends Propriete{
     public void acheterPropriete(Joueur j) {
         	j.perdreCash(this.getPrix());
                 j.addPropriete(this);
+                this.setProprietaire(j);
     }
 
 
@@ -41,4 +41,6 @@ public class ProprieteAConstruire extends Propriete{
         return this.getLoyer() ;
         }
     }
+
+   
 }

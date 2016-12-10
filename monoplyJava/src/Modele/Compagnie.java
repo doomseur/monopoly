@@ -22,13 +22,8 @@ public class Compagnie extends Propriete{
     public void acheterPropriete(Joueur j) {
         j.perdreCash(this.getPrix());
         j.addCompagnie(this);
+        this.setProprietaire(j);
     }
-
-
-
-
-
-
 
 
 }
