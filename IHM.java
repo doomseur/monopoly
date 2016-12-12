@@ -62,25 +62,20 @@ public class IHM extends Observable{
            boolean continuer = true;
            String choix ="";
            Scanner sc = new Scanner(System.in);
+           System.out.println("Entrez les noms des joueurs un par ligne, caractère blanc pour finir :");
            while(nbJoueurs <6 && continuer){
-               System.out.println("Entrez le nom du joueur " + (nbJoueurs+1) +" :");
+               
                choix = sc.next();
                getNomJoueurs().add(choix);
                nbJoueurs++;
-               System.out.println("Voulez vous inscrire un nouveau joueur ? (oui/non)");
-               choix = sc.next();
-               while(!choix.equalsIgnoreCase("oui") && !choix.equalsIgnoreCase("non")){
-                    System.out.println("Saisie incorrecte, veuillez recommencer.(oui/non)");
-                    choix = sc.next();
-               }
-               if (choix.equalsIgnoreCase("non")){
-                   if(nbJoueurs >=2){
-                       continuer = false;
-                   }else{
-                       System.out.println("Pas assez de joueurs pour continuer.(2 minimum)");
-                   }
-                            
-               }
+              
+               if (choix.equalsIgnoreCase("")){
+                    if(nbJoueurs >=2){
+                        continuer = false;
+                    }else{
+                        System.out.println("Pas assez de joueurs pour continuer.(2 minimum)");
+                    }                            
+                }
            }
            setChanged();
            notifyObservers(Messages.INSCRIRE_FIN);
