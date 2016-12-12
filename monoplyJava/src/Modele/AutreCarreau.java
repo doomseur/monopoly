@@ -8,7 +8,7 @@ public class AutreCarreau extends Carreau{
         }
 
     @Override
-    public void Action(Joueur j,int valdé) {
-       System.out.println("Vous êtes sur une case qui ne sert à rien, fin de votre tour, yep !");
+    public String getType() {
+         return "AutreCarreau";
     }
 }

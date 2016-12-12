@@ -24,6 +24,12 @@ public class Compagnie extends Propriete{
         j.addCompagnie(this);
         this.setProprietaire(j);
     }
+    
+    
+    @Override
+    public String getType() {
+         return "Compagnie";
+    }
 
 
 }

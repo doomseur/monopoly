@@ -22,4 +22,10 @@ public class Gare extends Propriete {
         this.setLoyer(25*this.getProprietaire().getNbGares());
         return 25*this.getProprietaire().getNbGares();
     }
+    
+    
+    @Override
+    public String getType() {
+         return "Gare";
+    }
 }

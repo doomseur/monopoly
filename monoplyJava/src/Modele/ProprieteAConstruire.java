@@ -41,6 +41,12 @@ public class ProprieteAConstruire extends Propriete{
         return this.getLoyer() ;
         }
     }
+    
+    
+    @Override
+    public String getType() {
+         return "PropiereAConstruire";
+    }
 
    
 }

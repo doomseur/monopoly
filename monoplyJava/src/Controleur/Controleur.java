@@ -18,82 +18,118 @@ import Util.CouleurPropriete;
 import Util.Groupe;
 import Util.Utilitaire;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import Util.Messages;
+import static javafx.application.Platform.exit;
 
-public class Controleur {
+public class Controleur implements Observer{
+    
         private HashMap<CouleurPropriete,Groupe> groupes = new HashMap<>();
         private IHM ihm;
         private HashMap<Integer,Carreau> cases;
-        private  int nbjoueurs =0;
         private ArrayList<Joueur> joueurs = new ArrayList<>();
+        private int joueurActif;
         
         public Controleur(IHM ihm){
+            
             this.setIhm(ihm);
-            this.cases = new HashMap<Integer,Carreau>();
+            this.getIhm().addObserver(this);
+            this.setCases(new HashMap<Integer,Carreau>());
             this.buildGamePlateau("src/Data/data.txt");
-            for(int i : this.cases.keySet()){
-                System.out.println("Num: "+ cases.get(i).getNumero() +" Nom: "+ cases.get(i).getNom());
-            }
+            this.setJoueurActif(1);
+        }
+        
+        
+        public void start(){
+            this.ihm.afficheMenu();
+        }
+        
+        
+        
+        
+    @Override
+    public void update(Observable o, Object arg){
+       
+        if(arg==Messages.INSCRIRE_JOUEURS){
+            this.ihm.inscriptionJoueurs();
             
-            boolean continuer = true;
-            while(nbjoueurs <6 && continuer){
-                System.out.println("Entrez le nom du joueur " + (nbjoueurs+1) +" :");
-                Scanner sc = new Scanner(System.in);
-                String name = sc.next();
-                joueurs.add(new Joueur(name,cases.get(1),(Utilitaire.lancerdés()+Utilitaire.lancerdés())));
-                nbjoueurs = nbjoueurs + 1;
-                if(nbjoueurs <6){
-                    System.out.println("Voulez vous inscrire un nouveau joueur ? (oui/non)");
-                    String var;
-                    Scanner sc1 = new Scanner(System.in);
-                    var = sc1.next().trim();
-                        while(!var.equalsIgnoreCase("oui") & !var.equalsIgnoreCase("non")){
-                            System.out.println("Saisie incorrecte, veuillez recommencer.");
-                               var = sc.next();
-                        }
-                        if (nbjoueurs <2 && "non".equals(var)){
-                            System.out.println("Pas assez de joueurs pour continuer.(2 minimum)");
-                        }
-                        else if (nbjoueurs >= 2 &&"non".equals(var)){
-                            continuer = false;
-                        }}}
-            System.out.println("Les joueurs inscrits sont : ");
-            for(int i =0; i< this.joueurs.size(); i++){
-                System.out.println(joueurs.get(i).getNomJoueur());
+        }else if(arg==Messages.INSCRIRE_FIN){
+            ArrayList<String> nomJoueurs = this.ihm.getNomJoueurs();
+            for(int i=0; i<nomJoueurs.size(); i++){
+                this.joueurs.add(new Joueur(nomJoueurs.get(i),this.cases.get(1),(Utilitaire.lancerdés()+Utilitaire.lancerdés())));
             }
+            this.ihm.afficheMenu();
             
-            ArrayList<Joueur> joueursTemp = new ArrayList<>();
-                
-            for(int i=12; i>=2; i--){
-                for(int j =0; j< this.joueurs.size(); j++){
-                    if(this.joueurs.get(j).getValDésOrdre()==i){
-                        joueursTemp.add(this.joueurs.get(j));
+        }else if(arg==Messages.COMMENCER_JEU){
+            //on vérifi si il y as de joueurs
+            if(this.joueurs.size()!=0){
+                //vecteur de joueur temporaire
+                ArrayList<Joueur> joueursTemp = new ArrayList<>();
+                //on réordonne les joueurs en fonction de leur scores au dés    
+                for(int i=12; i>=2; i--){
+                    for(int j =0; j< this.joueurs.size(); j++){
+                        if(this.joueurs.get(j).getValDésOrdre()==i){
+                            joueursTemp.add(this.joueurs.get(j));
+                        }
                     }
                 }
+                this.joueurs = joueursTemp;
+                
+                
+                //this.ihm.messageDebutTour(joueurActif, joueurActif, joueurActif);
+            }else{
+                this.ihm.message("Veillez inscrire des joueurs pour pouvoir jouer");
+                this.ihm.message("");
+                this.ihm.afficheMenu();
             }
-            this.joueurs = joueursTemp;
             
-            System.out.println("Le nouvel ordre est : ");
-            for(int i =0; i< this.joueurs.size(); i++){
-                System.out.println("Joueur n°"+ i +" : "+ joueurs.get(i).getNomJoueur() +" avec un score au dés de "+ joueurs.get(i).getValDésOrdre());
-            }
+        }else if(arg==Messages.LANCER_DES){
+             setJoueurActif(getJoueurActif() + 1);
+             if(this.getJoueurActif()>joueurs.size()){
+                this.setJoueurActif(this.getJoueurActif() - joueurs.size());
+             }
              
+             int valDés= Util.Utilitaire.lancerdés();
+             Joueur jCourant = joueurs.get(getJoueurActif());
+             this.avancer(jCourant, valDés);
+             this.ihm.messageDebutTour(this.getJoueurActif(), jCourant.getNomJoueur(), jCourant.getCash(), valDés);
+             Carreau caseCourant = jCourant.getPositionCourante();
+             String type = caseCourant.getType();
+             if(type=="AutreCarreau"){
+                 this.ihm.messageCaseVide();
+             }else{
+                 if(caseCourant.get){
+                     
+                 }
+             }
             
-            jouerPlsTour(joueurs);
+        }else if(arg==Messages.QUITTER){
+            exit();
         }
-	
-//    avancer(joueur courant , valdes)
-        private void avancer(Joueur joueur, int valdés) {
-		joueur.getPositionCourante().getNumero() ; // récupère le numéro du carreau ou est le joueur 
-               int nouveauNum = calculNouvPosition(joueur.getPositionCourante().getNumero(), valdés) ;
-                joueur.Avancer(cases.get(nouveauNum)) ;
-                System.out.println(joueur.getNomJoueur() + " avance de " + valdés +" cases et arrive en " +cases.get(nouveauNum).getNom());
-              
-	}
         
-        public void update(Observer o, Object arg){
+        
+    }
+    
+    
+    
+    
+    private void avancer(Joueur joueur, int valdés) { 
+            int nouveauNum = calculNouvPosition(joueur.getPositionCourante().getNumero(), valdés) ;
+            joueur.Avancer(cases.get(nouveauNum));     
+	}
+    
+    
+
+	public int calculNouvPosition(int position, int valDés) {
+            int nouvPosition = position + valDés;
             
+            if(nouvPosition > 40){
+                nouvPosition = nouvPosition -40;
+            }
+            
+            return nouvPosition;
         }
         
         
@@ -104,7 +140,7 @@ public class Controleur {
             while (!finpartie) {  // tant que not jouer   
                 for(int i =0; i< joueurs.size(); i++){ // boucle sur tout les joueurs
                     if(joueurs.size()>=2){     
-                        System.out.println("C'est le tour de " + joueurs.get(i).getNomJoueur() +" il possède acutellement " + joueurs.get(i).getCash() +" euros !!!");
+                        //this.ihm.message("C'est le tour du joueur" + +" il gagne "++" euros");
                         jouerTour(joueurs.get(i)); //le joueur courant joue son tour
                         if (joueurs.get(i).getCash()<=0){
                             for(int j =0;  j<joueurs.get(i).getGares().size(); j++){
@@ -157,18 +193,7 @@ public class Controleur {
 
 
         
-        //calculNouvPosition(numero de la case , valeurdes dés )
-	public int calculNouvPosition(int position, int valDés) {
-	//joueur passe un tour complet	
-            if (position + valDés > 40) {
-//          getJoueurCourant().setCash(getJoueurCourant().getCash()+200 ) : // prend le joueur courant et lui ajoute 200$ car il est passé par la case départ 
-            int numerocase = position + valDés - 40 ;
-            return numerocase ;
-            }
-            else {
-            return position+  valDés ; //retourne la somme du numéro de la case + la valeur des dés
-}
-        }
+
 	
         
         
@@ -203,7 +228,7 @@ public class Controleur {
 					this.getCases().put(Integer.parseInt(data.get(i)[1]),new AutreCarreau(Integer.parseInt(data.get(i)[1]),data.get(i)[2]));
 				}
 				else
-System.err.println("[buildGamePleateau()] : Invalid Data type");
+                                System.err.println("[buildGamePleateau()] : Invalid Data type");
                         }
                         } 
 		catch(FileNotFoundException e){
@@ -248,6 +273,16 @@ System.err.println("[buildGamePleateau()] : Invalid Data type");
     
     public void setCases(HashMap<Integer,Carreau> cases) {
         this.cases = cases;
+    }
+
+  
+    public int getJoueurActif() {
+        return joueurActif;
+    }
+
+    
+    public void setJoueurActif(int joueurActif) {
+        this.joueurActif = joueurActif;
     }
 	
 

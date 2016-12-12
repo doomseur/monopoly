@@ -21,6 +21,8 @@ public class Main {
         IHM ihm = new IHM();
         
         Controleur controleur = new Controleur(ihm);
+
+        controleur.start();
         
     }
     
