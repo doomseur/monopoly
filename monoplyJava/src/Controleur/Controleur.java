@@ -22,7 +22,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 import Util.Messages;
-import static javafx.application.Platform.exit;
 
 public class Controleur implements Observer{
     
@@ -30,7 +29,7 @@ public class Controleur implements Observer{
         private IHM ihm;
         private HashMap<Integer,Carreau> cases;
         private ArrayList<Joueur> joueurs = new ArrayList<>();
-        private int joueurActif;
+        
         
         public Controleur(IHM ihm){
             
@@ -38,7 +37,7 @@ public class Controleur implements Observer{
             this.getIhm().addObserver(this);
             this.setCases(new HashMap<Integer,Carreau>());
             this.buildGamePlateau("src/Data/data.txt");
-            this.setJoueurActif(1);
+            
         }
         
         
@@ -61,7 +60,8 @@ public class Controleur implements Observer{
                 this.joueurs.add(new Joueur(nomJoueurs.get(i),this.cases.get(1),(Utilitaire.lancerdés()+Utilitaire.lancerdés())));
             }
             this.ihm.afficheMenu();
-            
+        }else if(arg==Messages.ACHETER){
+            cases.get(ihm.getNumCase()).actionAchat(joueurs.get(ihm.getNumJoueur()));
         }else if(arg==Messages.COMMENCER_JEU){
             //on vérifi si il y as de joueurs
             if(this.joueurs.size()!=0){
@@ -72,65 +72,31 @@ public class Controleur implements Observer{
                     for(int j =0; j< this.joueurs.size(); j++){
                         if(this.joueurs.get(j).getValDésOrdre()==i){
                             joueursTemp.add(this.joueurs.get(j));
+                            
                         }
                     }
                 }
                 this.joueurs = joueursTemp;
+                this.jouerPlsTour(joueurs);
                 
                 
-                //this.ihm.messageDebutTour(joueurActif, joueurActif, joueurActif);
+                
+      
             }else{
-                this.ihm.message("Veillez inscrire des joueurs pour pouvoir jouer");
+                this.ihm.messageInscription();
                 this.ihm.message("");
                 this.ihm.afficheMenu();
-            }
-            
-        }else if(arg==Messages.LANCER_DES){
-             setJoueurActif(getJoueurActif() + 1);
-             if(this.getJoueurActif()>joueurs.size()){
-                this.setJoueurActif(this.getJoueurActif() - joueurs.size());
-             }
-             
-             int valDés= Util.Utilitaire.lancerdés();
-             Joueur jCourant = joueurs.get(getJoueurActif());
-             this.avancer(jCourant, valDés);
-             this.ihm.messageDebutTour(this.getJoueurActif(), jCourant.getNomJoueur(), jCourant.getCash(), valDés);
-             Carreau caseCourant = jCourant.getPositionCourante();
-             String type = caseCourant.getType();
-             if(type=="AutreCarreau"){
-                 this.ihm.messageCaseVide();
-             }else{
-                 if(caseCourant.get){
-                     
-                 }
-             }
-            
-        }else if(arg==Messages.QUITTER){
-            exit();
-        }
-        
-        
-    }
-    
-    
-    
-    
-    private void avancer(Joueur joueur, int valdés) { 
-            int nouveauNum = calculNouvPosition(joueur.getPositionCourante().getNumero(), valdés) ;
-            joueur.Avancer(cases.get(nouveauNum));     
-	}
-    
-    
+}}}
+	
+//    avancer(joueur courant , valdes)
+        private void avancer(Joueur joueur, int valdés) {
+		joueur.getPositionCourante().getNumero() ; // récupère le numéro du carreau ou est le joueur 
+               int nouveauNum = calculNouvPosition(joueur.getPositionCourante().getNumero(), valdés) ;
+                joueur.Avancer(cases.get(nouveauNum)) ;
+                this.ihm.messageAvancer(joueur.getNomJoueur(), valdés,cases.get(nouveauNum).getNom());
+              
+	}        
 
-	public int calculNouvPosition(int position, int valDés) {
-            int nouvPosition = position + valDés;
-            
-            if(nouvPosition > 40){
-                nouvPosition = nouvPosition -40;
-            }
-            
-            return nouvPosition;
-        }
         
         
         
@@ -139,10 +105,24 @@ public class Controleur implements Observer{
         boolean finpartie =  false ;
             while (!finpartie) {  // tant que not jouer   
                 for(int i =0; i< joueurs.size(); i++){ // boucle sur tout les joueurs
-                    if(joueurs.size()>=2){     
-                        //this.ihm.message("C'est le tour du joueur" + +" il gagne "++" euros");
+                    if(joueurs.size()>=2){   
+                        String collec = "";
+                        for (int j=0; j< joueurs.get(i).getProprietes().size();j++){
+                          collec = collec + joueurs.get(i).getProprietes().get(j).getNom() +" | ";
+                        }
+                        for (int k=0; k< joueurs.get(i).getGares().size();k++){
+                          collec = collec + joueurs.get(i).getGares().get(k).getNom() +" | ";
+                        }
+                        for (int l=0; l< joueurs.get(i).getCompagnies().size();l++){
+                          collec = collec + joueurs.get(i).getCompagnies().get(l).getNom() +" | ";
+                        }
+                        
+                        this.ihm.messageDebutTour(joueurs.get(i).getNomJoueur(), + joueurs.get(i).getCash(), collec);
+                        
+                        
                         jouerTour(joueurs.get(i)); //le joueur courant joue son tour
                         if (joueurs.get(i).getCash()<=0){
+                            ihm.messageDefaite();
                             for(int j =0;  j<joueurs.get(i).getGares().size(); j++){
                                 
                                  joueurs.get(i).getGares().get(j).resetProprio();
@@ -161,11 +141,14 @@ public class Controleur implements Observer{
                             joueurs.remove(i); //enleve le joueur de la collection 
                         }    
                     Scanner sc = new Scanner(System.in);
-                    sc.next();
+                    String varquit = sc.nextLine();
+                    if(varquit.equals("exit")){
+                        System.exit(0);
+                    }
                     }
                     else{ 
                         finpartie= true ; 
-                        System.out.println("Partie terminée, le vainqueur est : " +joueurs.get(0).getNomJoueur() + "!!!!!!!!!!!!!!!!");
+                        this.ihm.messageVictoire(joueurs.get(0).getNomJoueur());
                     }    // sort de la boucle while    
                 }
             }   
@@ -173,13 +156,14 @@ public class Controleur implements Observer{
         
               
         public void jouerTour(Joueur joueur){
+            ihm.messagePosition(joueur.getPositionCourante().getNom());
             boolean rdouble = true;
             while (rdouble ==true){
             int valdé = Utilitaire.lancerdés() ;
             int valdé2 = Utilitaire.lancerdés() ;
             if(valdé==valdé2){
                 rdouble =true;
-                 System.out.println("Vous avez fait un double, vous aurez le droit de rejouer !");
+                 this.ihm.messageDouble();
             }
             else{
                 rdouble = false;
@@ -187,14 +171,21 @@ public class Controleur implements Observer{
             int vardés =valdé +valdé2;
               this.avancer(joueur, vardés);
                Carreau carreauJoueur = joueur.getPositionCourante();
-               carreauJoueur.Action(joueur,vardés) ; //l'action fera passé au tour suivant 
+               ihm.messageCase(carreauJoueur.action(joueur,vardés),joueurs.indexOf(joueur),joueur.getPositionCourante().getNumero()); //l'action fera jouer le même joueur tant qu'il fera des doubles et passera au suivant sinon.
             }
 }
 
 
         
-
-	
+	public int calculNouvPosition(int position, int valDés) {
+            int nouvPosition = position + valDés;
+            
+            if(nouvPosition > 40){
+                nouvPosition = nouvPosition -40;
+            }
+            
+            return nouvPosition;
+}
         
         
     
@@ -228,7 +219,7 @@ public class Controleur implements Observer{
 					this.getCases().put(Integer.parseInt(data.get(i)[1]),new AutreCarreau(Integer.parseInt(data.get(i)[1]),data.get(i)[2]));
 				}
 				else
-                                System.err.println("[buildGamePleateau()] : Invalid Data type");
+System.err.println("[buildGamePleateau()] : Invalid Data type");
                         }
                         } 
 		catch(FileNotFoundException e){
@@ -273,16 +264,6 @@ public class Controleur implements Observer{
     
     public void setCases(HashMap<Integer,Carreau> cases) {
         this.cases = cases;
-    }
-
-  
-    public int getJoueurActif() {
-        return joueurActif;
-    }
-
-    
-    public void setJoueurActif(int joueurActif) {
-        this.joueurActif = joueurActif;
     }
 	
 

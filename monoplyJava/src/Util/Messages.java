@@ -5,17 +5,13 @@
  */
 package Util;
 
-/**
- *
- * @author Eric
- */
+
+
 public enum Messages {
     INSCRIRE_JOUEURS,
     COMMENCER_JEU,
     QUITTER,
     INSCRIRE_FIN,
-    LANCER_DES,
-    ACHAT_CASE;
+    ACHETER;
 }
-
 

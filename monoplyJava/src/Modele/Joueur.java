@@ -12,6 +12,20 @@ public class Joueur {
          private ArrayList<Compagnie> compagnies = new ArrayList<>();
          private int valDésOrdre;
 
+    public Joueur(String nomJoueur, Carreau position, int valDés) {
+        this.setNomJoueur(nomJoueur);
+        this.setPositionCourante(position);
+        this.setValDésOrdre(valDés);
+    }
+    // on enlève la somme indiquée par loyer au cash du joueur.
+    public void perdreCash(int loyer) {
+	this.setCash(this.getCash()-loyer);
+    }
+    // on ajoute la somme indiquée par loyer au cash du joueur.
+    public void recevoirCash(int loyer) {
+	this.setCash(this.getCash()+loyer);
+    }     
+         
     public ArrayList<ProprieteAConstruire> getProprietes() {
         return proprietes;
     }
@@ -28,20 +42,7 @@ public class Joueur {
         this.compagnies = compagnies;
     }
          
-    public Joueur(String nomJoueur, Carreau position, int valDés) {
-        this.setNomJoueur(nomJoueur);
-        this.setPositionCourante(position);
-        this.setValDésOrdre(valDés);
-    }
-
-	public void perdreCash(int loyer) {
-		this.setCash(this.getCash()-loyer);
-	}
-
-	public void recevoirCash(int loyer) {
-		this.setCash(this.getCash()+loyer);
-	}
-
+   
     public String getNomJoueur() {
         return nomJoueur;
     }
@@ -73,35 +74,29 @@ public class Joueur {
     private void setPositionCourante(Carreau positionCourante) {
         this.positionCourante = positionCourante;
     }
-  public void Avancer(Carreau positionCourante){  
-        this.setPositionCourante(positionCourante);
-        
-}
+    // on utilise cette méthode pour changer la position courante du joueur sans rendre public le setteur.
+    public void Avancer(Carreau positionCourante){  
+        this.setPositionCourante(positionCourante);        
+    }
     public int getNbGares() {
-            return this.getGares().size();
-	}
+        return this.getGares().size();
+    }
+    
+    //on utilise un add différent pour chaque type de propriété afin de pouvoir plus facilement calculer les loyers de gares et compagnie.
+    public void addGare(Gare g) {
+	this.gares.add(g);
+    }
+    public void addPropriete (ProprieteAConstruire p) {
+	this.proprietes.add(p);
+    }
+    public void addCompagnie(Compagnie c) {
+	this.compagnies.add(c);
+    }
 
-	
-	public void addGare(Gare g) {
-		this.gares.add(g);
-	}
-        public void addPropriete (ProprieteAConstruire p) {
-		this.proprietes.add(p);
-	}
-        public void addCompagnie(Compagnie c) {
-		this.compagnies.add(c);
-	}
-
-
+// si le joueur possède toute les propriétés qui font partie du groupe grp, alors il renvoie vrai.
 public boolean AToutLeGroupe(Groupe grp){
- int var = grp.getNbproprietes();
- if(this.getProprietes().containsAll(grp.getProprietes())){
-     return true;
- }
- else{
-     return false;
- }
-}
+    return this.getProprietes().containsAll(grp.getProprietes());
+    }
 
    
     public int getValDésOrdre() {

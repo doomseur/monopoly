@@ -28,6 +28,6 @@ public abstract class Carreau {
     public void setNom(String nomCarreau) {
         this.nom = nomCarreau;
     }
-    public abstract String getType();
-
-    }
+    public abstract String action(Joueur j,int valdés);
+    public abstract void actionAchat(Joueur j);
+}

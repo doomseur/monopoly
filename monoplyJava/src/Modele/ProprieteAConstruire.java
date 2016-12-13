@@ -11,8 +11,6 @@ public class ProprieteAConstruire extends Propriete{
         this.group.addPropriete(this);
     }
 
-
-
     public Groupe getGroup() {
         return group;
     }
@@ -20,7 +18,7 @@ public class ProprieteAConstruire extends Propriete{
     private void setGroup(Groupe group) {
         this.group = group;
     }
-
+    //on soustrait le prix d'achat au cahs du joueur, ont ajoute la gare à sa collection et on le met en propriétaire de la proprieté. 
     @Override
     public void acheterPropriete(Joueur j) {
         	j.perdreCash(this.getPrix());
@@ -28,8 +26,7 @@ public class ProprieteAConstruire extends Propriete{
                 this.setProprietaire(j);
     }
 
-
-
+    // si le propriétaire a toutes les propriétés du groupe de cette propriété, on double le loyer.
     @Override
     public int calculLoyer(int valdés) {
        if(this.getProprietaire().AToutLeGroupe(this.getGroup())){
@@ -40,12 +37,6 @@ public class ProprieteAConstruire extends Propriete{
            
         return this.getLoyer() ;
         }
-    }
-    
-    
-    @Override
-    public String getType() {
-         return "PropiereAConstruire";
     }
 
    

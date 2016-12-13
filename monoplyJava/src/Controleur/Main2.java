@@ -19,7 +19,7 @@ public class Main2 {
         IHM ihm = new IHM();
         
         Controleur2 controleur = new Controleur2(ihm);
-        
+        controleur.start();
     }
     
 }

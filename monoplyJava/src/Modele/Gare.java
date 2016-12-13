@@ -8,7 +8,7 @@ public class Gare extends Propriete {
         
         }
 
-
+//on soustrait le prix d'achat au cahs du joueur, ont ajoute la gare à sa collection et on le met en propriétaire de la gare. 
         @Override
 	public void acheterPropriete(Joueur j) {
 		j.perdreCash(this.getPrix());
@@ -16,16 +16,10 @@ public class Gare extends Propriete {
                 this.setProprietaire(j);
 	}
 
-
+// on retourne le nombre de gare possédés par le propriétaire *25 comme loyer.
     @Override
     public int calculLoyer(int valdés) {
         this.setLoyer(25*this.getProprietaire().getNbGares());
         return 25*this.getProprietaire().getNbGares();
-    }
-    
-    
-    @Override
-    public String getType() {
-         return "Gare";
     }
 }

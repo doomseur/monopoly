@@ -8,7 +8,12 @@ public class AutreCarreau extends Carreau{
         }
 
     @Override
-    public String getType() {
-         return "AutreCarreau";
+    public String action(Joueur j,int valdé) {
+       return "caseVide";
     }
+    @Override
+    public void actionAchat(Joueur j){
+        
+    }
+    
 }
